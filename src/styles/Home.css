@@ -1,0 +1,64 @@
+.right-layer {
+  padding: 0;
+  margin: 0;
+  width: 20vw;
+  height: 100vh;
+  background-color: #EFC81A;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -999;
+}
+
+.left-layer {
+  padding: 0;
+  margin: 0;
+  width: 30vw;
+  height: 80vh;
+  background-color: #EFC81A;
+  position: absolute;
+  z-index: -998;
+}
+
+hr {
+  width: 25% !important;
+}
+
+.img-popular-recipe {
+  width: 25vw !important;
+  height: 50vh !important;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+}
+
+.img-popular-recipe p {
+  width: 53%;
+}
+
+@media only screen and (max-width: 768px) {
+  .right-layer{
+      width: 100vw;
+  }
+
+  .left-layer{
+      bottom: 0;
+      left: 0;
+  }
+
+  hr {
+      width: 100% !important;
+  }
+
+  .container-popular-recipe{
+      padding: 10px;
+  }
+
+  .img-popular-recipe{
+      width: 100% !important;
+  }
+
+  .img-popular-recipe p {
+      font-size: 2%;
+  }
+}
