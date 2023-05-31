@@ -47,17 +47,19 @@ function Profile() {
         <div className="row justify-content-center justify-content-md-start gap-1 gap-sm-2 gap-md-4 animate__animated animate__fadeInLeft">
           <Link
             className="mb-1 col-sm-2 col-md-2 d-flex align-items-end img-popular-recipe text-decoration-none text-black"
-            style={{ backgroundImage: "url(./img/Rectangle-314.webp)" }}
-            to="./detail-recipe"
+            style={{ backgroundImage: "url(./img/nasi-goreng-sederhana.webp)" }}
+            to="/detail-recipe/nasi-goreng-sederhana"
           >
-            <p className="fs-3 fw-medium">Chicken Kare</p>
+            <p className="fs-3 fw-medium">Nasi Goreng Sederhana</p>
           </Link>
           <Link
             className="mb-1 col-sm-2 col-md-2 d-flex align-items-end img-popular-recipe text-decoration-none text-black"
-            style={{ backgroundImage: "url(./img/Rectangle-315.webp)" }}
-            to="./detail-recipe"
+            style={{
+              backgroundImage: "url(./img/ayam-geprek-sambal-bawang.webp)",
+            }}
+            to="/detail-recipe/ayam-geprek-sambal-bawang"
           >
-            <p className="fs-3 fw-medium">Bomb Chicken</p>
+            <p className="fs-3 fw-medium">Ayam Geprek Sambal Bawang</p>
           </Link>
         </div>
       </div>
