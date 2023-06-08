@@ -1,9 +1,57 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
+import Swal from "sweetalert2"
+import { useDispatch, useSelector } from "react-redux"
+import { addAuth } from "../reducers/auth"
 
 import "../styles/Auth.css"
 
 function Login() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const state = useSelector((reducer) => reducer.auth)
+
+  React.useEffect(() => {
+    if (localStorage.getItem("auth") || state.auth) {
+      navigate("/profile")
+    }
+  }, [state])
+
+  const [email, setEmail] = React.useState("")
+  const [password, setPassword] = React.useState("")
+
+  const handleLogin = () => {
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/login`, {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        const token = response?.data?.token
+        const user_id = response?.data?.data?.id
+        const role = response?.data?.data?.role
+        Swal.fire({
+          title: "Login Success!",
+          text: "Login Success! Redirect to App...",
+          icon: "success",
+        }).then(() => {
+          localStorage.setItem("auth", "true")
+          localStorage.setItem("token", token)
+          localStorage.setItem("role", role)
+          localStorage.setItem("user_id", user_id)
+          dispatch(addAuth(response))
+        })
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Error!",
+          text: error?.response?.data?.message ?? "Something wrong in our App!",
+          icon: "error",
+        })
+      })
+  }
+
   return (
     <div>
       <div className="row flex-column flex-md-row">
@@ -22,7 +70,7 @@ function Login() {
           <div className="row m-0 p-0 justify-content-start justify-content-md-center">
             <div className="col col-md-8">
               <hr />
-              <form action="/" method="get">
+              <form onSubmit={(e) => e.preventDefault()}>
                 <div className="mb-3">
                   <label for="email" className="form-label">
                     E-mail
@@ -33,6 +81,7 @@ function Login() {
                     id="email"
                     name="email"
                     placeholder="E-mail"
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="mb-3">
@@ -45,6 +94,7 @@ function Login() {
                     id="password"
                     name="password"
                     placeholder="Password"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="mb-3 form-check">
@@ -63,6 +113,7 @@ function Login() {
                     type="submit"
                     className="btn"
                     style={{ backgroundColor: "#efc81a", color: "white" }}
+                    onClick={handleLogin}
                   >
                     Log in
                   </button>

@@ -1,11 +1,10 @@
 import React from "react"
-import { Link } from "react-router-dom"
 
 function RecipeCard(props) {
   const { title, image, id } = props
   return (
     <>
-      <Link
+      <a
         className="mb-1 col-sm-2 col-md-4 d-flex align-items-end img-popular-recipe text-decoration-none text-black animate__animated animate__fadeIn"
         style={{
           position: "relative",
@@ -13,7 +12,7 @@ function RecipeCard(props) {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-        to={`/detail-recipe/${id}`}
+        href={`/detail-recipe/${id}`}
       >
         <div
           style={{
@@ -36,7 +35,7 @@ function RecipeCard(props) {
         >
           {title}
         </p>
-      </Link>
+      </a>
     </>
   )
 }

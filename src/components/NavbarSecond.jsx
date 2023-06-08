@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-function NavbarSecond() {
+function Navbar() {
   return (
     <>
       <nav className="navbar navbar-expand-lg pt-4 animate__animated animate__fadeInDown">
@@ -48,15 +48,44 @@ function NavbarSecond() {
                 </Link>
               </li>
               <li className="nav-item d-lg-none d-block">
-                <Link
-                  className="nav-link"
-                  to="/login"
-                  style={{ color: "#2e266f" }}
-                >
-                  Login
-                </Link>
+                {localStorage.getItem("auth") ? (
+                  <>
+                    <Link
+                      className="nav-link"
+                      onClick={() => {
+                        localStorage.clear()
+                        window.location.href = "/"
+                      }}
+                      style={{ color: "#2e266f" }}
+                    >
+                      Logout
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      className="nav-link"
+                      to="/login"
+                      style={{ color: "#2e266f" }}
+                    >
+                      Login
+                    </Link>
+                  </>
+                )}
               </li>
             </ul>
+            <div>
+              <Link
+                onClick={() => {
+                  localStorage.clear()
+                  window.location.href = "/"
+                }}
+                className="text-decoration-none d-flex justify-content-end align-items-center gap-3 d-lg-flex d-none fw-semibold"
+                style={{ color: "#2e266f" }}
+              >
+                Logout
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
@@ -64,4 +93,4 @@ function NavbarSecond() {
   )
 }
 
-export default NavbarSecond
+export default Navbar

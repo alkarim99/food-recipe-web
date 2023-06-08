@@ -1,19 +1,24 @@
 import React from "react"
 import { useLocation } from "react-router"
+import axios from "axios"
 
 import NavbarSecond from "../components/NavbarSecond"
 import Footer from "../components/Footer"
-import ListRecipe from "../menu.json"
 
 function DetailVideoStep() {
-  const Recipes = ListRecipe.menu
   const location = useLocation()
+  const id = location?.pathname?.split("/")[2]
   const [currentRecipe, setCurrentRecipe] = React.useState(null)
-
   React.useEffect(() => {
-    const currentSlug = location?.pathname?.split("/")[2]
     window.scroll(0, 0)
-    setCurrentRecipe(Recipes.find((res) => res.slug === currentSlug))
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/recipes/${id}`)
+      .then((response) => {
+        setCurrentRecipe(response.data.data[0])
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }, [])
 
   const idVideo = currentRecipe?.videoLink?.split("/")[3]
@@ -23,8 +28,9 @@ function DetailVideoStep() {
       <NavbarSecond />
 
       <div className="container py-5 animate__animated animate__fadeIn vh-100">
-        <div className="row flex-column flex-md-row">
+        <div className="row flex-column flex-md-row pb-5">
           <div className="col text-center">
+            <h3 className="mb-4">{currentRecipe?.title}</h3>
             <iframe
               width="1000"
               height="500"
@@ -34,7 +40,6 @@ function DetailVideoStep() {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen
             ></iframe>
-            <h3>{currentRecipe?.title}</h3>
           </div>
         </div>
       </div>

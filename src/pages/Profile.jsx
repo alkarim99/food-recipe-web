@@ -1,12 +1,49 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
 
 import NavbarSecond from "../components/NavbarSecond"
 import Footer from "../components/Footer"
+import RecipeCard from "../components/RecipeCard"
 
 import "../styles/Profile.css"
 
 function Profile() {
+  const navigate = useNavigate()
+  const [profile, setProfile] = React.useState([])
+  const [listRecipes, setListRecipes] = React.useState([])
+
+  React.useEffect(() => {
+    if (!localStorage.getItem("auth")) {
+      navigate("/login")
+    } else {
+      const user_id = localStorage.getItem("user_id")
+      const role = localStorage.getItem("role")
+      if (role == 1) {
+        axios
+          .get(`${process.env.REACT_APP_BASE_URL}/users/${user_id}`)
+          .then((response) => {
+            setProfile(response?.data?.data[0])
+          })
+      } else {
+        axios
+          .get(`${process.env.REACT_APP_BASE_URL}/users`)
+          .then((response) => {
+            setProfile(response?.data?.data[0])
+          })
+      }
+
+      axios
+        .get(`${process.env.REACT_APP_BASE_URL}/recipes?user_id=${user_id}`)
+        .then((response) => {
+          setListRecipes(response?.data?.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }, [])
+
   return (
     <div>
       <NavbarSecond />
@@ -14,8 +51,8 @@ function Profile() {
       <div className="container py-5 mb-5">
         <div className="row justify-content-center pb-5 animate__animated animate__zoomIn">
           <div className="col text-center">
-            <img src="./img/user-icon.webp" alt="user-icon" />
-            <h3>Garneta Sharina</h3>
+            <img src={profile?.profilePicture} alt="user-icon" width={"15%"} />
+            <h3>{profile?.fullname}</h3>
           </div>
         </div>
         <div className="row animate__animated animate__fadeInLeft">
@@ -45,22 +82,19 @@ function Profile() {
           </div>
         </div>
         <div className="row justify-content-center justify-content-md-start gap-1 gap-sm-2 gap-md-4 animate__animated animate__fadeInLeft">
-          <Link
-            className="mb-1 col-sm-2 col-md-2 d-flex align-items-end img-popular-recipe text-decoration-none text-black"
-            style={{ backgroundImage: "url(./img/nasi-goreng-sederhana.webp)" }}
-            to="/detail-recipe/nasi-goreng-sederhana"
-          >
-            <p className="fs-3 fw-medium">Nasi Goreng Sederhana</p>
-          </Link>
-          <Link
-            className="mb-1 col-sm-2 col-md-2 d-flex align-items-end img-popular-recipe text-decoration-none text-black"
-            style={{
-              backgroundImage: "url(./img/ayam-geprek-sambal-bawang.webp)",
-            }}
-            to="/detail-recipe/ayam-geprek-sambal-bawang"
-          >
-            <p className="fs-3 fw-medium">Ayam Geprek Sambal Bawang</p>
-          </Link>
+          {listRecipes.length !== 0 ? (
+            listRecipes.map((item) => {
+              return (
+                <RecipeCard
+                  title={item?.title}
+                  image={item?.recipePicture}
+                  id={item?.id}
+                />
+              )
+            })
+          ) : (
+            <p className="text-center">You don't have a recipe list yet</p>
+          )}
         </div>
       </div>
 

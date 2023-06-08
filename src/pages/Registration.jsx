@@ -1,9 +1,44 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
+import Swal from "sweetalert2"
 
 import "../styles/Auth.css"
 
 function Registration() {
+  const navigate = useNavigate()
+
+  const [email, setEmail] = React.useState("")
+  const [fullName, setFullName] = React.useState("")
+  const [phoneNumber, setPhoneNumber] = React.useState("")
+  const [password, setPassword] = React.useState("")
+
+  const handleRegistration = () => {
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/users`, {
+        email: email,
+        fullname: fullName,
+        phoneNumber: phoneNumber,
+        password: password,
+      })
+      .then((response) => {
+        Swal.fire({
+          title: "Registration Success!",
+          text: "Registration Success! Please Login",
+          icon: "success",
+        }).then(() => {
+          navigate("/login")
+        })
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Error!",
+          text: error?.response?.data?.message ?? "Something wrong in our App!",
+          icon: "error",
+        })
+      })
+  }
+
   return (
     <div>
       <div className="row flex-column flex-md-row">
@@ -22,7 +57,7 @@ function Registration() {
           <div className="row m-0 p-0 justify-content-start justify-content-md-center">
             <div className="col col-md-8">
               <hr />
-              <form action="/" method="get">
+              <form onSubmit={(e) => e.preventDefault()}>
                 <div className="mb-3">
                   <label for="name" className="form-label">
                     Name
@@ -33,6 +68,7 @@ function Registration() {
                     id="name"
                     name="name"
                     placeholder="Name"
+                    onChange={(e) => setFullName(e.target.value)}
                   />
                 </div>
                 <div className="mb-3">
@@ -45,6 +81,7 @@ function Registration() {
                     id="email"
                     name="email"
                     placeholder="Enter email address"
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="mb-3">
@@ -57,6 +94,7 @@ function Registration() {
                     id="phoneNumber"
                     name="phoneNumber"
                     placeholder="08xxxxxxxxxx"
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
                 <div className="mb-3">
@@ -81,6 +119,7 @@ function Registration() {
                     id="newPassword"
                     name="newPassword"
                     placeholder="New Password"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="mb-3 form-check">
@@ -99,6 +138,7 @@ function Registration() {
                     type="submit"
                     className="btn"
                     style={{ backgroundColor: "#efc81a", color: "white" }}
+                    onClick={handleRegistration}
                   >
                     Register Account
                   </button>

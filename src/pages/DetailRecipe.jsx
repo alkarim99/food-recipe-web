@@ -1,26 +1,39 @@
 import React from "react"
 import { useLocation } from "react-router"
 import { Link } from "react-router-dom"
+import axios from "axios"
 
 import NavbarSecond from "../components/NavbarSecond"
 import Footer from "../components/Footer"
-import ListRecipe from "../menu.json"
 
 import "../styles/DetailRecipe.css"
 
 function DetailRecipe() {
-  const Recipes = ListRecipe.menu
   const location = useLocation()
+  const id = location?.pathname?.split("/")[2]
   const [currentRecipe, setCurrentRecipe] = React.useState(null)
-
+  // document
+  //   .querySelectorAll(".modal-backdrop")
+  //   .forEach((el) => el.classList.remove("modal-backdrop"))
+  // document
+  //   .querySelectorAll(".fade")
+  //   .forEach((el) => el.classList.remove("fade"))
+  // document
+  //   .querySelectorAll(".show")
+  //   .forEach((el) => el.classList.remove("show"))
   React.useEffect(() => {
-    const currentSlug = location?.pathname?.split("/")[2]
     window.scroll(0, 0)
-    setCurrentRecipe(Recipes.find((res) => res.slug === currentSlug))
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/recipes/${id}`)
+      .then((response) => {
+        setCurrentRecipe(response.data.data[0])
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }, [])
 
   const ingredients = currentRecipe?.ingredients?.split(", ")
-  const idVideo = currentRecipe?.videoLink?.split("/")[3]
 
   return (
     <div>
@@ -35,7 +48,7 @@ function DetailRecipe() {
         <div className="row py-3 justify-content-center animate__animated animate__zoomIn">
           <div
             className="recipe-picture"
-            style={{ backgroundImage: `url(/img/${currentRecipe?.image})` }}
+            style={{ backgroundImage: `url(${currentRecipe?.recipePicture})` }}
           ></div>
         </div>
         <div className="row py-3 justify-content-md-center animate__animated animate__fadeInLeft">
@@ -53,7 +66,7 @@ function DetailRecipe() {
           <div className="col-md-7">
             <h3>Video Step</h3>
             <Link
-              to={`/detail-video-step/${currentRecipe?.slug}`}
+              to={`/detail-video-step/${id}`}
               className="btn btn-lg"
               style={{ backgroundColor: "#efc81a", color: "#fff" }}
             >

@@ -1,14 +1,37 @@
-import { Link } from "react-router-dom"
+import React from "react"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
 
 import "../styles/Home.css"
 
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import RecipeCard from "../components/RecipeCard"
-
-import ListRecipe from "../menu.json"
+import RecipeCardSecond from "../components/RecipeCardSecond"
 
 function Home() {
+  const navigate = useNavigate()
+  const [listRecipes, setListRecipes] = React.useState([])
+  const [keyword, setKeyword] = React.useState("")
+  const [searchResult, setSearchResult] = React.useState([])
+
+  React.useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/recipes?sortType=DESC&page=1`)
+      .then((response) => {
+        setListRecipes(response?.data?.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+
+  const handleSearch = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/recipes?keyword=${keyword}`)
+      .then((response) => setSearchResult(response?.data?.data))
+  }
+
   return (
     <div>
       <Navbar />
@@ -24,13 +47,74 @@ function Home() {
             >
               Discover Recipe & Delicious Food
             </h1>
-            <form action="#" method="post">
-              <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Search Restaurant, Food"
-              />
-            </form>
+            <input
+              type="text"
+              className="form-control form-control-lg"
+              placeholder="Search Food"
+              data-bs-toggle="modal"
+              data-bs-target="#search-recipe"
+            />
+          </div>
+
+          <div
+            class="modal fade"
+            id="search-recipe"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    Search Recipe
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    placeholder="Search Food"
+                    onChange={(e) => {
+                      setKeyword(e.target.value)
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.keyCode === 13) {
+                        handleSearch()
+                      }
+                    }}
+                  />
+                  <div className="row justify-content-center gap-1 gap-sm-2 gap-md-4 mt-4">
+                    {searchResult.length > 0
+                      ? searchResult.map((item) => {
+                          return (
+                            <RecipeCardSecond
+                              title={item?.title}
+                              image={item?.recipePicture}
+                              id={item?.id}
+                            />
+                          )
+                        })
+                      : "Recipe Not Found"}
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="col text-center text-lg-end animate__animated animate__fadeInRight">
             <img
@@ -79,7 +163,7 @@ function Home() {
               Resep Nasi Goreng Sederhana, Praktis Lezat Hanya dengan Lima Bahan
             </p>
             <Link
-              to="/detail-recipe/nasi-goreng-sederhana"
+              to="/detail-recipe/1"
               className="btn btn-lg"
               style={{ backgroundColor: "#efc81a", color: "#fff" }}
             >
@@ -120,7 +204,7 @@ function Home() {
             >
               Ayam Geprek Sambal Bawang
             </h2>
-            <hr className="opacity-100" />
+            <hr className="opacity-100" style={{ width: "25% !important" }} />
             <p
               style={{ color: "#3f3a3a" }}
               className="text-center text-lg-start"
@@ -128,7 +212,7 @@ function Home() {
               Resep Ayam Geprek Sambal Bawang, Pedas Nikmat dan Bikin Nagih
             </p>
             <Link
-              to="/detail-recipe/ayam-geprek-sambal-bawang"
+              to="/detail-recipe/6"
               className="btn btn-lg"
               style={{ backgroundColor: "#efc81a", color: "#fff" }}
             >
@@ -151,14 +235,17 @@ function Home() {
         </p>
       </div>
 
-      <div className="container px-4 px-md-4 py-5 mb-5 container-popular-recipe">
+      <div
+        className="container px-4 px-md-4 py-5 mb-5 container-popular-recipe"
+        id="popular-recipe"
+      >
         <div className="row justify-content-between gap-1 gap-sm-2 gap-md-4">
-          {ListRecipe.menu.map((item) => {
+          {listRecipes.map((item) => {
             return (
               <RecipeCard
                 title={item?.title}
-                image={item?.image}
-                slug={item?.slug}
+                image={item?.recipePicture}
+                id={item?.id}
               />
             )
           })}
