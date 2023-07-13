@@ -1,3 +1,4 @@
+import FormData from "form-data"
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
@@ -9,7 +10,7 @@ import Footer from "../components/Footer"
 function AddRecipe() {
   const navigate = useNavigate()
 
-  const [recipePicture, setRecipePicture] = React.useState("")
+  const [recipePicture, setRecipePicture] = React.useState([])
   const [title, setTitle] = React.useState("")
   const [ingredients, setIngredients] = React.useState("")
   const [videoLink, setVideoLink] = React.useState("")
@@ -24,12 +25,17 @@ function AddRecipe() {
   })
 
   const handleCreateRecipe = () => {
+    const formData = new FormData()
+    formData.append("recipePicture", recipePicture)
+    formData.append("title", title)
+    formData.append("ingredients", ingredients)
+    formData.append("videoLink", videoLink)
+    formData.append("user_id", userId)
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/recipes`, {
-        title: title,
-        ingredients: ingredients,
-        videoLink: videoLink,
-        user_id: userId,
+      .post(`${process.env.REACT_APP_BASE_URL}/recipes`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((response) => {
         Swal.fire({
@@ -41,9 +47,6 @@ function AddRecipe() {
         })
       })
       .catch((error) => {
-        console.log(title)
-        console.log(ingredients)
-        console.log(videoLink)
         console.log(error)
         Swal.fire({
           title: "Error!",
@@ -65,7 +68,7 @@ function AddRecipe() {
                 className="form-control mb-3"
                 type="file"
                 id="formFile"
-                // onChange={(e) => setRecipePicture(e.target.files[0])}
+                onChange={(e) => setRecipePicture(e.target.files[0])}
               />
               <input
                 type="text"

@@ -88,7 +88,7 @@ function Profile() {
                 <RecipeCard
                   title={item?.title}
                   image={item?.recipePicture}
-                  id={item?.id}
+                  id={item?.recipes_id}
                 />
               )
             })
