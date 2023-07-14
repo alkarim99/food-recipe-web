@@ -21,6 +21,7 @@ Food Recipe Website uses a number of open source projects to work properly:
 
 And of course Food Recipe website itself is open source with a [public repository](https://github.com/alkarim99/food-recipe-fe-react) on GitHub.
 
+[Deploy Link](https://food-recipe-fe-react.vercel.app/)
 [Backend repository](https://github.com/alkarim99/food-recipe-be)
 
 ## Installation
