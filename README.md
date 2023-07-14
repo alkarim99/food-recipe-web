@@ -41,7 +41,7 @@ npm start
    <img src="./screenshots/3-Landing-Page.png" width="540"/>
    <img src="./screenshots/4-Landing-Page.png" width="540"/>
 2. Add Recipe Page <br>
-   <img src="./screenshots/8-Add-Recipe-Page.png" width="540"/>
+   <img src="./screenshots/8-Add-Recipe.png" width="540"/>
 3. Detail Recipe Page <br>
    <img src="./screenshots/5-Detail-Recipe.png" width="540"/>
    <img src="./screenshots/6-Detail-Recipe.png" width="540"/>
