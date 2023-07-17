@@ -21,7 +21,7 @@ Food Recipe Website uses a number of open source projects to work properly:
 
 And of course Food Recipe website itself is open source with a [public repository](https://github.com/alkarim99/food-recipe-fe-react) on GitHub.
 
-[Deploy Link](https://food-recipe-fe-react.vercel.app/)
+[Deploy Link](https://food-recipe-fe-react.vercel.app/) <br>
 [Backend repository](https://github.com/alkarim99/food-recipe-be)
 
 ## Installation
@@ -37,19 +37,19 @@ npm start
 ## Screenshot
 
 1. Landing Page <br>
-   <img src="./screenshots/1-Landing-Page.png" width="540"/>
-   <img src="./screenshots/2-Landing-Page.png" width="540"/>
-   <img src="./screenshots/3-Landing-Page.png" width="540"/>
-   <img src="./screenshots/4-Landing-Page.png" width="540"/>
+   <img src="./screenshots/1-Landing-Page-edit.png" width="540"/>
+   <img src="./screenshots/2-Landing-Page-edit.png" width="540"/>
+   <img src="./screenshots/3-Landing-Page-edit.png" width="540"/>
+   <img src="./screenshots/4-Landing-Page-edit.png" width="540"/>
 2. Add Recipe Page <br>
-   <img src="./screenshots/8-Add-Recipe.png" width="540"/>
+   <img src="./screenshots/8-Add-Recipe-edit.png" width="540"/>
 3. Detail Recipe Page <br>
-   <img src="./screenshots/5-Detail-Recipe.png" width="540"/>
-   <img src="./screenshots/6-Detail-Recipe.png" width="540"/>
-   <img src="./screenshots/7-Video-Recipe.png" width="540"/>
+   <img src="./screenshots/5-Detail-Recipe-edit.png" width="540"/>
+   <img src="./screenshots/6-Detail-Recipe-edit.png" width="540"/>
+   <img src="./screenshots/7-Video-Recipe-edit.png" width="540"/>
 4. Profile Page <br>
-   <img src="./screenshots/9-Profile.png" width="540"/>
+   <img src="./screenshots/9-Profile-edit.png" width="540"/>
 5. Login Page <br>
-   <img src="./screenshots/10-Login.png" width="540"/>
+   <img src="./screenshots/10-Login-edit.png" width="540"/>
 6. Register Page <br>
-   <img src="./screenshots/11-Register.png" width="540"/>
+   <img src="./screenshots/11-Register-edit.png" width="540"/>
