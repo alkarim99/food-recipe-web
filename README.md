@@ -42,7 +42,7 @@ npm start
    <img src="./screenshots/3-Landing-Page-edit.png" width="540"/>
    <img src="./screenshots/4-Landing-Page-edit.png" width="540"/>
 2. Add Recipe Page <br>
-   <img src="./screenshots/8-Add-Recipe-edit.png" width="540"/>
+   <img src="./screenshots/8-Add-Recipe-1.png" width="540"/>
 3. Detail Recipe Page <br>
    <img src="./screenshots/5-Detail-Recipe-edit.png" width="540"/>
    <img src="./screenshots/6-Detail-Recipe-edit.png" width="540"/>
