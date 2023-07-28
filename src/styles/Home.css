@@ -3,7 +3,7 @@
   margin: 0;
   width: 20vw;
   height: 100vh;
-  background-color: #EFC81A;
+  background-color: #efc81a;
   position: absolute;
   right: 0;
   top: 0;
@@ -15,7 +15,7 @@
   margin: 0;
   width: 30vw;
   height: 80vh;
-  background-color: #EFC81A;
+  background-color: #efc81a;
   position: absolute;
   z-index: -998;
 }
@@ -37,28 +37,33 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .right-layer{
-      width: 100vw;
+  nav .collapse {
+    background-color: white;
+    border-radius: 10px;
   }
 
-  .left-layer{
-      bottom: 0;
-      left: 0;
+  .right-layer {
+    width: 100vw;
+  }
+
+  .left-layer {
+    bottom: 0;
+    left: 0;
   }
 
   hr {
-      width: 100% !important;
+    width: 100% !important;
   }
 
-  .container-popular-recipe{
-      padding: 10px;
+  .container-popular-recipe {
+    padding: 10px;
   }
 
-  .img-popular-recipe{
-      width: 100% !important;
+  .img-popular-recipe {
+    width: 100% !important;
   }
 
   .img-popular-recipe p {
-      font-size: 2%;
+    font-size: 2%;
   }
 }

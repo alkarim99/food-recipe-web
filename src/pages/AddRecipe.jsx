@@ -15,6 +15,7 @@ function AddRecipe() {
   const [ingredients, setIngredients] = React.useState("")
   const [videoLink, setVideoLink] = React.useState("")
   const [userId, setUserId] = React.useState("")
+  const [isLoading, setIsLoading] = React.useState(false)
 
   React.useEffect(() => {
     if (!localStorage.getItem("auth")) {
@@ -25,6 +26,7 @@ function AddRecipe() {
   })
 
   const handleCreateRecipe = () => {
+    setIsLoading(true)
     const formData = new FormData()
     formData.append("recipePicture", recipePicture)
     formData.append("title", title)
@@ -54,6 +56,9 @@ function AddRecipe() {
           icon: "error",
         })
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   return (
@@ -79,23 +84,27 @@ function AddRecipe() {
                 onChange={(e) => setTitle(e.target.value)}
               />
               <textarea
-                className="form-control mb-3"
+                className="form-control mb-1"
                 name="ingredients"
                 id="ingredients"
                 cols="35"
                 rows="5"
                 onChange={(e) => setIngredients(e.target.value)}
-              >
-                Ingredients :
-              </textarea>
+                placeholder="Ingredients"
+              ></textarea>
+              <small className="mb-3">
+                * Write the ingredients with a comma separator (salt, paper,
+                etc...)
+              </small>
               <input
                 type="text"
-                className="form-control mb-3"
+                className="form-control mb-1"
                 name="video"
                 id="video"
                 placeholder="Video"
                 onChange={(e) => setVideoLink(e.target.value)}
               />
+              <small className="mb-3">* Please use youtube link</small>
               <div className="d-grid">
                 <button
                   type="submit"
@@ -103,7 +112,7 @@ function AddRecipe() {
                   style={{ backgroundColor: "#efc81a", color: "#fff" }}
                   onClick={handleCreateRecipe}
                 >
-                  Send
+                  {isLoading ? "Loading..." : "Send"}
                 </button>
               </div>
             </div>

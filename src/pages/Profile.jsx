@@ -63,7 +63,7 @@ function Profile() {
                   My Recipe
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/">
                   Saved Recipe
                 </Link>
@@ -72,7 +72,7 @@ function Profile() {
                 <Link className="nav-link" to="/">
                   Liked Recipe
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -82,18 +82,23 @@ function Profile() {
           </div>
         </div>
         <div className="row justify-content-center justify-content-md-start gap-1 gap-sm-2 gap-md-4 animate__animated animate__fadeInLeft">
-          {listRecipes.length !== 0 ? (
-            listRecipes.map((item) => {
-              return (
-                <RecipeCard
-                  title={item?.title}
-                  image={item?.recipePicture}
-                  id={item?.recipes_id}
-                />
-              )
-            })
+          {listRecipes?.length !== 0 ? (
+            listRecipes?.length !== 0 ? (
+              listRecipes?.map((item, index) => {
+                return (
+                  <RecipeCard
+                    title={item?.title}
+                    image={item?.recipePicture}
+                    id={item?.recipes_id}
+                    key={index}
+                  />
+                )
+              })
+            ) : (
+              <p className="text-center">You don't have a recipe list yet</p>
+            )
           ) : (
-            <p className="text-center">You don't have a recipe list yet</p>
+            <p className="text-center">Loading...</p>
           )}
         </div>
       </div>

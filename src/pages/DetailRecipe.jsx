@@ -76,7 +76,7 @@ function DetailRecipe() {
         </div>
         <div className="row py-3 justify-content-md-center animate__animated animate__zoomIn">
           <div className="col-md-7">
-            <form action="" method="post">
+            <form>
               <textarea
                 className="form-control mb-3"
                 name="comment"
@@ -88,9 +88,11 @@ function DetailRecipe() {
               </textarea>
               <div className="d-grid">
                 <button
-                  type="submit"
+                  type="button"
                   className="btn"
                   style={{ backgroundColor: "#efc81a", color: "#fff" }}
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
                 >
                   Send
                 </button>
@@ -116,6 +118,43 @@ function DetailRecipe() {
                   Nice Recipe, Simple and Delicious, Thankyou
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal */}
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Sorry
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              Sorry this feature is not available right now
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>

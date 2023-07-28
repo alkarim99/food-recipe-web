@@ -12,8 +12,10 @@ function Registration() {
   const [fullName, setFullName] = React.useState("")
   const [phoneNumber, setPhoneNumber] = React.useState("")
   const [password, setPassword] = React.useState("")
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const handleRegistration = () => {
+    setIsLoading(true)
     axios
       .post(`${process.env.REACT_APP_BASE_URL}/users`, {
         email: email,
@@ -37,18 +39,24 @@ function Registration() {
           icon: "error",
         })
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   return (
     <div>
       <div className="row flex-column flex-md-row">
-        <div className="col p-4 left-col d-flex justify-content-center align-items-center">
+        <Link
+          to="/"
+          className="col p-4 left-col d-flex justify-content-center align-items-center"
+        >
           <img
             className="image-fluid w-25 animate__animated animate__fadeInUp"
             src="./img/Group-697.webp"
             alt="Mama-Recipe-Logo"
           />
-        </div>
+        </Link>
         <div className="col p-4 d-flex flex-column justify-content-center m-0 py-5 animate__animated animate__fadeInDown">
           <h1 className="text-center">Let's Get Started!</h1>
           <p className="text-center text-secondary">
@@ -109,7 +117,7 @@ function Registration() {
                     placeholder="Create New Password"
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-4">
                   <label for="newPassword" className="form-label">
                     New Password
                   </label>
@@ -122,7 +130,7 @@ function Registration() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <div className="mb-3 form-check">
+                {/* <div className="mb-3 form-check">
                   <input
                     type="checkbox"
                     className="form-check-input"
@@ -132,7 +140,7 @@ function Registration() {
                   <label className="form-check-label" for="terms-conditions">
                     I agree to terms & conditions
                   </label>
-                </div>
+                </div> */}
                 <div className="d-grid">
                   <button
                     type="submit"
@@ -140,7 +148,7 @@ function Registration() {
                     style={{ backgroundColor: "#efc81a", color: "white" }}
                     onClick={handleRegistration}
                   >
-                    Register Account
+                    {isLoading ? "Loading..." : "Register Account"}
                   </button>
                 </div>
               </form>

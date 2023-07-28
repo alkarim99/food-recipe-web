@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 
 function RecipeCard(props) {
   const { title, image, id } = props
+
   return (
     <>
       <Link

@@ -20,8 +20,10 @@ function Login() {
 
   const [email, setEmail] = React.useState("")
   const [password, setPassword] = React.useState("")
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const handleLogin = () => {
+    setIsLoading(true)
     axios
       .post(`${process.env.REACT_APP_BASE_URL}/auth/login`, {
         email: email,
@@ -50,18 +52,24 @@ function Login() {
           icon: "error",
         })
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   return (
     <div>
       <div className="row flex-column flex-md-row">
-        <div className="col p-4 vh-100 left-col d-flex justify-content-center align-items-center">
+        <Link
+          to="/"
+          className="col p-4 vh-100 left-col d-flex justify-content-center align-items-center"
+        >
           <img
             className="image-fluid w-25 animate__animated animate__fadeInUp"
             src="./img/Group-697.webp"
             alt="Mama-Recipe-Logo"
           />
-        </div>
+        </Link>
         <div className="col p-4 d-flex flex-column justify-content-center m-0 animate__animated animate__fadeInDown">
           <h1 className="text-center">Welcome</h1>
           <p className="text-center text-secondary">
@@ -84,7 +92,7 @@ function Login() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-4">
                   <label for="password" className="form-label">
                     Password
                   </label>
@@ -97,7 +105,7 @@ function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <div className="mb-3 form-check">
+                {/* <div className="mb-3 form-check">
                   <input
                     type="checkbox"
                     className="form-check-input"
@@ -107,7 +115,7 @@ function Login() {
                   <label className="form-check-label" for="termsConditions">
                     I agree to terms & conditions
                   </label>
-                </div>
+                </div> */}
                 <div className="d-grid">
                   <button
                     type="submit"
@@ -115,21 +123,21 @@ function Login() {
                     style={{ backgroundColor: "#efc81a", color: "white" }}
                     onClick={handleLogin}
                   >
-                    Log in
+                    {isLoading ? "Loading..." : "Log In"}
                   </button>
                 </div>
-                <p className="text-end fs-6 fw-medium mt-3">
+                {/* <p className="text-end fs-6 fw-medium mt-3">
                   <Link
                     to="/forgot-password"
                     className="text-decoration-none text-black text-body-secondary"
                   >
                     Forgot Password?
                   </Link>
-                </p>
+                </p> */}
               </form>
             </div>
           </div>
-          <p className="text-center">
+          <p className="text-center mt-3">
             Don't have an account?
             <Link
               to="/registration"

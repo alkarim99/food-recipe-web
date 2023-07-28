@@ -12,6 +12,7 @@ import RecipeCardSecond from "../components/RecipeCardSecond"
 function Home() {
   const navigate = useNavigate()
   const [listRecipes, setListRecipes] = React.useState([])
+  const [newRecipes, setNewRecipes] = React.useState([])
   const [keyword, setKeyword] = React.useState("")
   const [searchResult, setSearchResult] = React.useState([])
 
@@ -20,6 +21,7 @@ function Home() {
       .get(`${process.env.REACT_APP_BASE_URL}/recipes?sortType=DESC&page=1`)
       .then((response) => {
         setListRecipes(response?.data?.data)
+        setNewRecipes(response?.data?.data[0])
       })
       .catch((error) => {
         console.log(error)
@@ -30,6 +32,11 @@ function Home() {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/recipes?keyword=${keyword}`)
       .then((response) => setSearchResult(response?.data?.data))
+  }
+
+  function addDefaultSrc(ev) {
+    ev.target.src = "./img/Group-697.webp"
+    ev.target.style = { width: "50%" }
   }
 
   return (
@@ -163,7 +170,7 @@ function Home() {
               Resep Nasi Goreng Sederhana, Praktis Lezat Hanya dengan Lima Bahan
             </p>
             <Link
-              to="/detail-recipe/1"
+              to="/detail-recipe/12"
               className="btn btn-lg"
               style={{ backgroundColor: "#efc81a", color: "#fff" }}
             >
@@ -192,8 +199,9 @@ function Home() {
         <div className="row flex-column gap-5 flex-lg-row py-5">
           <div className="col text-center text-lg-start animate__animated animate__fadeInLeft">
             <img
-              src="./img/ayam-geprek-sambal-bawang.webp"
+              src={newRecipes?.recipePicture}
               alt="food"
+              onError={addDefaultSrc}
               style={{ width: "80%" }}
             />
           </div>
@@ -202,17 +210,17 @@ function Home() {
               className="text-center text-lg-start fs-1"
               style={{ color: "#3f3a3a" }}
             >
-              Ayam Geprek Sambal Bawang
+              {newRecipes?.title}
             </h2>
             <hr className="opacity-100" style={{ width: "25% !important" }} />
             <p
               style={{ color: "#3f3a3a" }}
               className="text-center text-lg-start"
             >
-              Resep Ayam Geprek Sambal Bawang, Pedas Nikmat dan Bikin Nagih
+              Resep Terbaru yang Dapat Anda coba untuk Keluarga Kesayangan
             </p>
             <Link
-              to="/detail-recipe/6"
+              to={`/detail-recipe/${newRecipes?.id}`}
               className="btn btn-lg"
               style={{ backgroundColor: "#efc81a", color: "#fff" }}
             >
@@ -231,7 +239,7 @@ function Home() {
           style={{ width: "15px", backgroundColor: "#efc81a", opacity: "100%" }}
         ></div>
         <p className="m-0 ms-3 fs-1 fw-semibold" style={{ color: "#3f3a3a" }}>
-          Popular Recipe
+          All Recipe
         </p>
       </div>
 
@@ -240,12 +248,13 @@ function Home() {
         id="popular-recipe"
       >
         <div className="row justify-content-between gap-1 gap-sm-2 gap-md-4">
-          {listRecipes.map((item) => {
+          {listRecipes.map((item, index) => {
             return (
               <RecipeCard
                 title={item?.title}
                 image={item?.recipePicture}
                 id={item?.id}
+                key={index}
               />
             )
           })}
