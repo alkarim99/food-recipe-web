@@ -45,7 +45,7 @@ function Registration() {
   }
 
   return (
-    <div>
+    <div className="overflow-hidden">
       <div className="row flex-column flex-md-row">
         <Link
           to="/"

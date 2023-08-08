@@ -45,7 +45,7 @@ function Home() {
 
       <div className="right-layer animate__animated animate__fadeIn"></div>
 
-      <div className="container mt-4" style={{ height: "100vh" }}>
+      <div className="container mt-4" style={{ height: "600px" }}>
         <div className="row flex-column-reverse gap-5 flex-lg-row py-5">
           <div className="col-8 col-lg-4 align-self-center animate__animated animate__fadeInLeft">
             <h1
@@ -134,7 +134,7 @@ function Home() {
       </div>
 
       <div
-        className="container d-flex align-items-center my-5 animate__animated animate__flipInX"
+        className="container d-flex align-items-center mt-3 mb-5 animate__animated animate__flipInX"
         style={{ height: "80px" }}
       >
         <div
@@ -146,7 +146,7 @@ function Home() {
         </p>
       </div>
 
-      <div className="container vh-100">
+      <div className="container" style={{ marginBottom: "100px" }}>
         <div className="row flex-column gap-5 flex-lg-row py-5">
           <div className="col text-center text-lg-start animate__animated animate__fadeInLeft">
             <img
@@ -195,7 +195,7 @@ function Home() {
 
       <div className="left-layer animate__animated animate__fadeIn"></div>
 
-      <div className="container vh-100">
+      <div className="container" style={{ marginBottom: "100px" }}>
         <div className="row flex-column gap-5 flex-lg-row py-5">
           <div className="col text-center text-lg-start animate__animated animate__fadeInLeft">
             <img
@@ -247,7 +247,7 @@ function Home() {
         className="container px-4 px-md-4 py-5 mb-5 container-popular-recipe"
         id="popular-recipe"
       >
-        <div className="row justify-content-between gap-1 gap-sm-2 gap-md-4">
+        <div className="row justify-content-center gap-1 gap-sm-2 gap-md-4">
           {listRecipes.map((item, index) => {
             return (
               <RecipeCard

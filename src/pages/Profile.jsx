@@ -12,6 +12,7 @@ function Profile() {
   const navigate = useNavigate()
   const [profile, setProfile] = React.useState([])
   const [listRecipes, setListRecipes] = React.useState([])
+  const [isLoading, SetIsLoading] = React.useState(true)
 
   React.useEffect(() => {
     if (!localStorage.getItem("auth")) {
@@ -40,6 +41,9 @@ function Profile() {
         })
         .catch((error) => {
           console.log(error)
+        })
+        .finally(() => {
+          SetIsLoading(false)
         })
     }
   }, [])
@@ -81,24 +85,27 @@ function Profile() {
             <hr />
           </div>
         </div>
-        <div className="row justify-content-center justify-content-md-start gap-1 gap-sm-2 gap-md-4 animate__animated animate__fadeInLeft">
-          {listRecipes?.length !== 0 ? (
-            listRecipes?.length !== 0 ? (
-              listRecipes?.map((item, index) => {
-                return (
-                  <RecipeCard
-                    title={item?.title}
-                    image={item?.recipePicture}
-                    id={item?.recipes_id}
-                    key={index}
-                  />
-                )
-              })
-            ) : (
-              <p className="text-center">You don't have a recipe list yet</p>
-            )
-          ) : (
+        <div className="row justify-content-center justify-content-md-center gap-1 gap-sm-2 gap-md-4 animate__animated animate__fadeInLeft">
+          {isLoading ? (
             <p className="text-center">Loading...</p>
+          ) : listRecipes?.length !== 0 ? (
+            listRecipes?.map((item, index) => {
+              return (
+                <RecipeCard
+                  title={item?.title}
+                  image={item?.recipePicture}
+                  id={item?.recipes_id}
+                  key={index}
+                />
+              )
+            })
+          ) : (
+            <>
+              <div className="alert alert-warning text-center" role="alert">
+                You don't have a recipe list yet, please create your first
+                recipe!
+              </div>
+            </>
           )}
         </div>
       </div>
