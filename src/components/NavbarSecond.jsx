@@ -75,16 +75,40 @@ function Navbar() {
               </li>
             </ul>
             <div>
-              <Link
-                onClick={() => {
-                  localStorage.clear()
-                  window.location.href = "/"
-                }}
-                className="text-decoration-none d-flex justify-content-end align-items-center gap-3 d-lg-flex d-none fw-semibold"
-                style={{ color: "#2e266f" }}
-              >
-                Logout
-              </Link>
+              {localStorage.getItem("auth") ? (
+                <>
+                  <Link
+                    onClick={() => {
+                      localStorage.clear()
+                      window.location.href = "/"
+                    }}
+                    className="text-decoration-none d-flex justify-content-end align-items-center gap-3 d-lg-flex d-none fw-semibold"
+                    style={{ color: "#2e266f" }}
+                  >
+                    <img
+                      src="./img/user-icon.webp"
+                      alt="user-icon"
+                      style={{ width: "15%" }}
+                    />
+                    Logout
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="text-decoration-none d-flex justify-content-end align-items-center gap-3 d-lg-flex d-none fw-semibold"
+                    style={{ color: "#2e266f" }}
+                  >
+                    <img
+                      src="../img/user-icon.webp"
+                      alt="user-icon"
+                      style={{ width: "15%" }}
+                    />
+                    Login
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

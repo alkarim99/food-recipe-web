@@ -83,7 +83,7 @@ function Navbar() {
                       window.location.href = "/"
                     }}
                     className="text-decoration-none d-flex justify-content-end align-items-center gap-3 d-lg-flex d-none fw-semibold"
-                    style={{ color: "#fff" }}
+                    style={{ color: "#2e266f" }}
                   >
                     <img
                       src="./img/user-icon.webp"
@@ -98,7 +98,7 @@ function Navbar() {
                   <Link
                     to="/login"
                     className="text-decoration-none d-flex justify-content-end align-items-center gap-3 d-lg-flex d-none fw-semibold"
-                    style={{ color: "#fff" }}
+                    style={{ color: "#2e266f" }}
                   >
                     <img
                       src="./img/user-icon.webp"

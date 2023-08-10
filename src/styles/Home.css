@@ -38,6 +38,13 @@
   width: 53%;
 }
 
+@media only screen and (min-width: 1400px) {
+  .left-layer,
+  .right-layer {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   nav .collapse {
     background-color: white;

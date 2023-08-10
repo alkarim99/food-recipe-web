@@ -45,8 +45,8 @@ function Registration() {
   }
 
   return (
-    <div className="overflow-hidden">
-      <div className="row flex-column flex-md-row">
+    <div className="overflow-x-hidden">
+      <div className="row flex-column flex-md-row vh-100">
         <Link
           to="/"
           className="col p-4 left-col d-flex justify-content-center align-items-center"

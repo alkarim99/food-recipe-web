@@ -57,13 +57,20 @@ function Profile() {
           <div className="col text-center">
             <img src={profile?.profilePicture} alt="user-icon" width={"15%"} />
             <h3>{profile?.fullname}</h3>
+            <Link
+              to={`/edit-profile`}
+              className="btn"
+              style={{ backgroundColor: "#efc81a", color: "#fff" }}
+            >
+              Edit Profile
+            </Link>
           </div>
         </div>
         <div className="row animate__animated animate__fadeInLeft">
           <div className="col">
             <ul className="navbar-nav d-flex flex-md-row gap-md-4 fs-6 text-center">
               <li className="nav-item">
-                <Link className="nav-link fw-bold" to="/">
+                <Link className="nav-link fw-bold" to="/profile">
                   My Recipe
                 </Link>
               </li>

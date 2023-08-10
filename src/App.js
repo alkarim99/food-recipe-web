@@ -16,6 +16,7 @@ import ResetPassword from "./pages/ResetPassword"
 import Registration from "./pages/Registration"
 import DetailRecipe from "./pages/DetailRecipe"
 import DetailVideoStep from "./pages/DetailVideoStep"
+import EditProfile from "./pages/EditProfile"
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: "/detail-video-step/:id",
     element: <DetailVideoStep />,
+  },
+  {
+    path: "/edit-profile",
+    element: <EditProfile />,
   },
 ])
 
