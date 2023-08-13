@@ -2,7 +2,7 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { addAuth } from "../reducers/auth"
+import { addAuth } from "../store/reducers/auth"
 
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
