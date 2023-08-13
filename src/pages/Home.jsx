@@ -195,7 +195,7 @@ function Home() {
 
       <div className="left-layer animate__animated animate__fadeIn"></div>
 
-      <div className="container" style={{ marginBottom: "100px" }}>
+      <div className="container" style={{ marginBottom: "150px" }}>
         <div className="row flex-column gap-5 flex-lg-row py-5">
           <div className="col text-center text-lg-start animate__animated animate__fadeInLeft">
             <img

@@ -1,65 +1,84 @@
-import FormData from "form-data"
 import React from "react"
+import { useLocation } from "react-router"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import Swal from "sweetalert2"
 import { useDispatch, useSelector } from "react-redux"
 import { addAuth } from "../reducers/auth"
 
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
+import Swal from "sweetalert2"
 
-function AddRecipe() {
+function EditRecipe() {
+  const location = useLocation()
+  const id = location?.pathname?.split("/")[2]
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const state = useSelector((reducer) => reducer.auth)
-  const [recipePicture, setRecipePicture] = React.useState([])
-  const [title, setTitle] = React.useState("")
-  const [ingredients, setIngredients] = React.useState("")
-  const [videoLink, setVideoLink] = React.useState("")
+  const recipe = state?.recipes.find((item) => item.recipes_id == id)
+  const [recipePicture, setRecipePicture] = React.useState("")
+  const [title, setTitle] = React.useState(recipe?.title)
+  const [ingredients, setIngredients] = React.useState(recipe?.ingredients)
+  const [videoLink, setVideoLink] = React.useState(recipe?.videoLink)
   const [isLoading, setIsLoading] = React.useState(false)
 
   React.useEffect(() => {
-    if (!state?.auth) {
+    window.scroll(0, 0)
+    if (!state.auth) {
       navigate("/login")
     }
-  })
+  }, [])
 
-  const handleCreateRecipe = () => {
+  const handleUpdateRecipe = () => {
     setIsLoading(true)
-    const formData = new FormData()
-    formData.append("recipePicture", recipePicture)
-    formData.append("title", title)
-    formData.append("ingredients", ingredients)
-    formData.append("videoLink", videoLink)
-    formData.append("user_id", state?.userData?.id)
+    console.log(recipePicture == "")
+    if (recipePicture != "") {
+      const formData = new FormData()
+      formData.append("photo", recipePicture)
+      axios
+        .patch(
+          `${process.env.REACT_APP_BASE_URL}/recipes/photo/${id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/recipes`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      .patch(`${process.env.REACT_APP_BASE_URL}/recipes/${id}`, {
+        title,
+        ingredients,
+        videoLink,
       })
       .then((response) => {
         const token = state?.token
         const userData = state?.userData
-        axios
-          .get(
-            `${process.env.REACT_APP_BASE_URL}/recipes?user_id=${state?.userData?.id}`
-          )
-          .then((response) => {
-            const recipes = response?.data?.data
-            dispatch(addAuth({ auth: true, userData, token, recipes }))
-            Swal.fire({
-              title: "Success Create Recipe!",
-              text: "Success Create Recipe! Go to your profile",
-              icon: "success",
-            }).then(() => {
+        Swal.fire({
+          title: "Success Update Recipe!",
+          text: "Success Update Recipe! Go to your profile",
+          icon: "success",
+        }).then(() => {
+          axios
+            .get(
+              `${process.env.REACT_APP_BASE_URL}/recipes?user_id=${userData?.id}`
+            )
+            .then((response) => {
+              const recipes = response?.data?.data
+              dispatch(addAuth({ auth: true, userData, token, recipes }))
               navigate("/profile")
             })
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+            .catch((error) => {
+              console.log(error)
+            })
+        })
       })
       .catch((error) => {
         console.log(error)
@@ -75,13 +94,20 @@ function AddRecipe() {
   }
 
   return (
-    <div>
+    <>
       <Navbar />
 
       <div className="container py-5 mb-5 animate__animated animate__zoomIn">
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="row py-3 justify-content-md-center">
             <div className="col-md-7 d-grid">
+              <div className="text-center mb-2">
+                <img
+                  src={recipe?.recipePicture}
+                  alt="user-icon"
+                  width={"80%"}
+                />
+              </div>
               <input
                 className="form-control mb-3"
                 type="file"
@@ -91,9 +117,10 @@ function AddRecipe() {
               <input
                 type="text"
                 className="form-control mb-3"
-                name="title"
-                id="title"
-                placeholder="Title"
+                name="fullname"
+                id="fullname"
+                placeholder="Fullname"
+                defaultValue={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
               <textarea
@@ -102,6 +129,7 @@ function AddRecipe() {
                 id="ingredients"
                 cols="35"
                 rows="5"
+                defaultValue={ingredients}
                 onChange={(e) => setIngredients(e.target.value)}
                 placeholder="Ingredients"
               ></textarea>
@@ -115,6 +143,7 @@ function AddRecipe() {
                 name="video"
                 id="video"
                 placeholder="Video"
+                defaultValue={videoLink}
                 onChange={(e) => setVideoLink(e.target.value)}
               />
               <small className="mb-3">* Please use youtube link</small>
@@ -123,7 +152,7 @@ function AddRecipe() {
                   type="submit"
                   className="btn"
                   style={{ backgroundColor: "#efc81a", color: "#fff" }}
-                  onClick={handleCreateRecipe}
+                  onClick={handleUpdateRecipe}
                 >
                   {isLoading ? "Loading..." : "Send"}
                 </button>
@@ -134,8 +163,8 @@ function AddRecipe() {
       </div>
 
       <Footer />
-    </div>
+    </>
   )
 }
 
-export default AddRecipe
+export default EditRecipe

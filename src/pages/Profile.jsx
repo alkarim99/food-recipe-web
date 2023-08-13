@@ -1,56 +1,34 @@
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
+import { useSelector } from "react-redux"
 
-import NavbarSecond from "../components/NavbarSecond"
+import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
-import RecipeCard from "../components/RecipeCard"
+import RecipeCardThird from "../components/RecipeCardThird"
 
 import "../styles/Profile.css"
 
 function Profile() {
   const navigate = useNavigate()
+  const state = useSelector((reducer) => reducer.auth)
   const [profile, setProfile] = React.useState([])
   const [listRecipes, setListRecipes] = React.useState([])
   const [isLoading, SetIsLoading] = React.useState(true)
 
   React.useEffect(() => {
-    if (!localStorage.getItem("auth")) {
+    if (!state?.auth) {
       navigate("/login")
     } else {
-      const user_id = localStorage.getItem("user_id")
-      const role = localStorage.getItem("role")
-      if (role == 1) {
-        axios
-          .get(`${process.env.REACT_APP_BASE_URL}/users/${user_id}`)
-          .then((response) => {
-            setProfile(response?.data?.data[0])
-          })
-      } else {
-        axios
-          .get(`${process.env.REACT_APP_BASE_URL}/users`)
-          .then((response) => {
-            setProfile(response?.data?.data[0])
-          })
-      }
-
-      axios
-        .get(`${process.env.REACT_APP_BASE_URL}/recipes?user_id=${user_id}`)
-        .then((response) => {
-          setListRecipes(response?.data?.data)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-        .finally(() => {
-          SetIsLoading(false)
-        })
+      setProfile(state?.userData)
+      setListRecipes(state?.recipes)
+      SetIsLoading(false)
     }
   }, [])
 
   return (
     <div>
-      <NavbarSecond />
+      <Navbar />
 
       <div className="container py-5 mb-5">
         <div className="row justify-content-center pb-5 animate__animated animate__zoomIn">
@@ -98,7 +76,7 @@ function Profile() {
           ) : listRecipes?.length !== 0 ? (
             listRecipes?.map((item, index) => {
               return (
-                <RecipeCard
+                <RecipeCardThird
                   title={item?.title}
                   image={item?.recipePicture}
                   id={item?.recipes_id}

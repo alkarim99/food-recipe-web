@@ -1,8 +1,10 @@
 import React from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { addAuth } from "../reducers/auth"
 
-import NavbarSecond from "../components/NavbarSecond"
+import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import Swal from "sweetalert2"
 
@@ -10,35 +12,21 @@ import "../styles/Profile.css"
 
 function EditProfile() {
   const navigate = useNavigate()
-  const [profile, setProfile] = React.useState([])
+  const dispatch = useDispatch()
+  const state = useSelector((reducer) => reducer.auth)
+  const [profile, setProfile] = React.useState(state?.userData)
   const [isLoading, setIsLoading] = React.useState(false)
-  const [profilePicture, setProfilePicture] = React.useState("")
-  const [fullname, setFullname] = React.useState("")
-  const [phoneNumber, setPhoneNumber] = React.useState("")
+  const [profilePicture, setProfilePicture] = React.useState(
+    state?.userData?.profilePicture
+  )
+  const [fullname, setFullname] = React.useState(state?.userData?.fullname)
+  const [phoneNumber, setPhoneNumber] = React.useState(
+    state?.userData?.phoneNumber
+  )
 
   React.useEffect(() => {
-    if (!localStorage.getItem("auth")) {
+    if (!state.auth) {
       navigate("/login")
-    } else {
-      const user_id = localStorage.getItem("user_id")
-      const role = localStorage.getItem("role")
-      if (role == 1) {
-        axios
-          .get(`${process.env.REACT_APP_BASE_URL}/users/${user_id}`)
-          .then((response) => {
-            setProfile(response?.data?.data[0])
-            setFullname(response?.data?.data[0].fullname)
-            setPhoneNumber(response?.data?.data[0].phoneNumber)
-          })
-      } else {
-        axios
-          .get(`${process.env.REACT_APP_BASE_URL}/users`)
-          .then((response) => {
-            setProfile(response?.data?.data[0])
-            setFullname(response?.data?.data[0].fullname)
-            setPhoneNumber(response?.data?.data[0].phoneNumber)
-          })
-      }
     }
   }, [])
 
@@ -66,11 +54,15 @@ function EditProfile() {
         phoneNumber,
       })
       .then((response) => {
+        const token = state?.token
+        const newData = response?.data?.data[0]
+        const recipes = state?.recipes
         Swal.fire({
           title: "Success Update Profile!",
           text: "Success Update Profile! Go to your profile",
           icon: "success",
         }).then(() => {
+          dispatch(addAuth({ auth: true, userData: newData, token, recipes }))
           navigate("/profile")
         })
       })
@@ -89,7 +81,7 @@ function EditProfile() {
 
   return (
     <div>
-      <NavbarSecond />
+      <Navbar />
 
       <div className="container py-5 mb-5 animate__animated animate__zoomIn">
         <form onSubmit={(e) => e.preventDefault()}>
@@ -99,7 +91,7 @@ function EditProfile() {
                 <img
                   src={profile?.profilePicture}
                   alt="user-icon"
-                  width={"15%"}
+                  width={"50%"}
                 />
               </div>
               <input

@@ -13,7 +13,7 @@ function Login() {
   const state = useSelector((reducer) => reducer.auth)
 
   React.useEffect(() => {
-    if (localStorage.getItem("auth") || state.auth) {
+    if (state.auth) {
       navigate("/profile")
     }
   }, [state])
@@ -31,18 +31,23 @@ function Login() {
       })
       .then((response) => {
         const token = response?.data?.token
-        const user_id = response?.data?.data?.id
-        const role = response?.data?.data?.role
+        const userData = response?.data?.data
         Swal.fire({
           title: "Login Success!",
           text: "Login Success! Redirect to App...",
           icon: "success",
         }).then(() => {
-          localStorage.setItem("auth", "true")
-          localStorage.setItem("token", token)
-          localStorage.setItem("role", role)
-          localStorage.setItem("user_id", user_id)
-          dispatch(addAuth(response))
+          axios
+            .get(
+              `${process.env.REACT_APP_BASE_URL}/recipes?user_id=${userData?.id}`
+            )
+            .then((response) => {
+              const recipes = response?.data?.data
+              dispatch(addAuth({ auth: true, userData, token, recipes }))
+            })
+            .catch((error) => {
+              console.log(error)
+            })
         })
       })
       .catch((error) => {

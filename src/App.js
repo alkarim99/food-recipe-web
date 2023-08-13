@@ -2,9 +2,12 @@ import "bootstrap/dist/css/bootstrap.css"
 import "bootstrap/dist/js/bootstrap.js"
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import store from "./store"
-import { Provider } from "react-redux"
+// import store from "./store"
+import { Provider, useSelector } from "react-redux"
 import axios from "axios"
+import React from "react"
+import { store, persistor } from "./store"
+import { PersistGate } from "redux-persist/integration/react"
 
 import Home from "./pages/Home"
 import AddRecipe from "./pages/AddRecipe"
@@ -17,6 +20,7 @@ import Registration from "./pages/Registration"
 import DetailRecipe from "./pages/DetailRecipe"
 import DetailVideoStep from "./pages/DetailVideoStep"
 import EditProfile from "./pages/EditProfile"
+import EditRecipe from "./pages/EditRecipe"
 
 const router = createBrowserRouter([
   {
@@ -63,29 +67,42 @@ const router = createBrowserRouter([
     path: "/edit-profile",
     element: <EditProfile />,
   },
+  {
+    path: "/edit-recipe/:id",
+    element: <EditRecipe />,
+  },
 ])
 
 function App() {
-  axios.interceptors.request.use(
-    (config) => {
-      if (localStorage.getItem("token")) {
-        config.headers["Authorization"] = `Bearer ${localStorage.getItem(
-          "token"
-        )}`
-      }
-      return config
-    },
-    (error) => {
-      Promise.reject(error)
-    }
-  )
   return (
     <div>
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
+      <PersistGate loading={null} persistor={persistor}>
+        <Provider store={store}>
+          <RunApp RouterProvider={RouterProvider} router={router} />
+        </Provider>
+      </PersistGate>
     </div>
   )
+}
+
+function RunApp({ RouterProvider, router }) {
+  const state = useSelector((reducer) => reducer.auth)
+
+  React.useEffect(() => {
+    axios.interceptors.request.use(
+      (config) => {
+        if (state?.token != "") {
+          config.headers["Authorization"] = `Bearer ${state?.token}`
+        }
+        return config
+      },
+      (error) => {
+        Promise.reject(error)
+      }
+    )
+  }, [])
+
+  return <RouterProvider router={router} />
 }
 
 export default App

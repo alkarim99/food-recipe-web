@@ -1,7 +1,13 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { addAuth } from "../reducers/auth"
 
 function Navbar() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const state = useSelector((reducer) => reducer.auth)
+
   return (
     <>
       <nav className="navbar navbar-expand-lg pt-4 animate__animated animate__fadeInDown">
@@ -48,13 +54,17 @@ function Navbar() {
                 </Link>
               </li>
               <li className="nav-item d-lg-none d-block">
-                {localStorage.getItem("auth") ? (
+                {state?.auth ? (
                   <>
                     <Link
                       className="nav-link"
                       onClick={() => {
                         localStorage.clear()
-                        window.location.href = "/"
+                        dispatch(
+                          addAuth({ auth: false, userData: {}, token: "" })
+                        )
+                        // window.location.href = "/"
+                        navigate("/")
                       }}
                       style={{ color: "#2e266f" }}
                     >
@@ -75,12 +85,15 @@ function Navbar() {
               </li>
             </ul>
             <div>
-              {localStorage.getItem("auth") ? (
+              {state?.auth ? (
                 <>
                   <Link
                     onClick={() => {
                       localStorage.clear()
-                      window.location.href = "/"
+                      dispatch(
+                        addAuth({ auth: false, userData: {}, token: "" })
+                      )
+                      navigate("/")
                     }}
                     className="text-decoration-none d-flex justify-content-end align-items-center gap-3 d-lg-flex d-none fw-semibold"
                     style={{ color: "#2e266f" }}
