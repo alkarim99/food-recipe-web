@@ -14,7 +14,7 @@ function EditProfile() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const state = useSelector((reducer) => reducer.auth)
-  const [profile, setProfile] = React.useState(state?.userData)
+  const profile = React.useState(state?.userData)
   const [isLoading, setIsLoading] = React.useState(false)
   const [profilePicture, setProfilePicture] = React.useState(
     state?.userData?.profilePicture

@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Swal from "sweetalert2"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
@@ -9,7 +9,6 @@ import "../styles/RecipeCardThird.css"
 
 function RecipeCard(props) {
   const { title, image, id } = props
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const state = useSelector((reducer) => reducer.auth)
 

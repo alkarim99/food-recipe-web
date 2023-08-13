@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import axios from "axios"
 
 import "../styles/Home.css"
@@ -10,7 +10,6 @@ import RecipeCard from "../components/RecipeCard"
 import RecipeCardSecond from "../components/RecipeCardSecond"
 
 function Home() {
-  const navigate = useNavigate()
   const [listRecipes, setListRecipes] = React.useState([])
   const [newRecipes, setNewRecipes] = React.useState([])
   const [keyword, setKeyword] = React.useState("")
