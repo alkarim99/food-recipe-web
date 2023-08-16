@@ -17,6 +17,7 @@ function EditRecipe() {
   const state = useSelector((reducer) => reducer.auth)
   const recipe = state?.recipes.find((item) => item.recipes_id == id)
   const [recipePicture, setRecipePicture] = React.useState("")
+  const [category, setCategory] = React.useState(recipe?.category)
   const [title, setTitle] = React.useState(recipe?.title)
   const [ingredients, setIngredients] = React.useState(recipe?.ingredients)
   const [videoLink, setVideoLink] = React.useState(recipe?.videoLink)
@@ -31,7 +32,6 @@ function EditRecipe() {
 
   const handleUpdateRecipe = () => {
     setIsLoading(true)
-    console.log(recipePicture == "")
     if (recipePicture != "") {
       const formData = new FormData()
       formData.append("photo", recipePicture)
@@ -57,6 +57,7 @@ function EditRecipe() {
         title,
         ingredients,
         videoLink,
+        category,
       })
       .then((response) => {
         const token = state?.token
@@ -123,6 +124,23 @@ function EditRecipe() {
                 defaultValue={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
+              <div className="form-floating mb-3">
+                <select
+                  className="form-select"
+                  id="category"
+                  aria-label="Floating label select example"
+                  defaultValue={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <option value="rice">Rice</option>
+                  <option value="noodle">Noodle</option>
+                  <option value="soup">Soup</option>
+                  <option value="dessert">Dessert</option>
+                  <option value="spicy">spicy</option>
+                  <option value="uncategorized">Uncategorized</option>
+                </select>
+                <label for="category">Category</label>
+              </div>
               <textarea
                 className="form-control mb-1"
                 name="ingredients"

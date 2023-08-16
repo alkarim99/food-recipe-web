@@ -43,6 +43,9 @@ function DetailRecipe() {
         <div className="row justify-content-center animate__animated animate__fadeInDown">
           <div className="col">
             <h1 className="text-center text-black">{currentRecipe?.title}</h1>
+            <p className="text-center text-capitalize text-secondary">
+              {currentRecipe?.category}
+            </p>
           </div>
         </div>
         <div className="row py-3 justify-content-center animate__animated animate__zoomIn">
