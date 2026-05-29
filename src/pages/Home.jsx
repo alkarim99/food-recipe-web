@@ -102,7 +102,7 @@ function Home() {
                           return (
                             <RecipeCardSecond
                               title={item?.title}
-                              image={item?.recipepicture}
+                              image={item?.recipe_picture}
                               id={item?.id}
                             />
                           )
@@ -198,7 +198,7 @@ function Home() {
         <div className="row flex-column gap-5 flex-lg-row py-5">
           <div className="col text-center text-lg-start animate__animated animate__fadeInLeft">
             <img
-              src={newRecipes?.recipepicture}
+              src={newRecipes?.recipe_picture}
               alt="food"
               onError={addDefaultSrc}
               style={{ width: "80%" }}
@@ -251,7 +251,7 @@ function Home() {
             return (
               <RecipeCard
                 title={item?.title}
-                image={item?.recipepicture}
+                image={item?.recipe_picture}
                 id={item?.id}
                 key={index}
               />

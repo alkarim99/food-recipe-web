@@ -17,7 +17,7 @@ function EditProfile() {
   const profile = React.useState(state?.userData)
   const [isLoading, setIsLoading] = React.useState(false)
   const [profilePicture, setProfilePicture] = React.useState(
-    state?.userData?.profilepicture
+    state?.userData?.profile_picture
   )
   const [fullname, setFullname] = React.useState(state?.userData?.fullname)
   const [phoneNumber, setPhoneNumber] = React.useState(
@@ -89,7 +89,7 @@ function EditProfile() {
             <div className="col-md-7 d-grid">
               <div className="text-center mb-2">
                 <img
-                  src={profile?.profilepicture}
+                  src={profile?.profile_picture}
                   alt="user-icon"
                   width={"50%"}
                 />
