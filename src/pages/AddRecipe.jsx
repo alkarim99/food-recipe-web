@@ -28,11 +28,11 @@ function AddRecipe() {
   const handleCreateRecipe = () => {
     setIsLoading(true)
     const formData = new FormData()
-    formData.append("recipePicture", recipePicture)
+    formData.append("recipe_picture", recipePicture)
     formData.append("title", title)
     formData.append("category", category)
     formData.append("ingredients", ingredients)
-    formData.append("videoLink", videoLink)
+    formData.append("video_link", videoLink)
     formData.append("user_id", state?.userData?.id)
     axios
       .post(`${process.env.REACT_APP_BASE_URL}/recipes`, formData, {

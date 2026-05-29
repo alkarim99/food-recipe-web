@@ -20,7 +20,7 @@ function EditRecipe() {
   const [category, setCategory] = React.useState(recipe?.category)
   const [title, setTitle] = React.useState(recipe?.title)
   const [ingredients, setIngredients] = React.useState(recipe?.ingredients)
-  const [videoLink, setVideoLink] = React.useState(recipe?.videolink)
+  const [videoLink, setVideoLink] = React.useState(recipe?.video_link)
   const [isLoading, setIsLoading] = React.useState(false)
 
   React.useEffect(() => {
@@ -56,7 +56,7 @@ function EditRecipe() {
       .patch(`${process.env.REACT_APP_BASE_URL}/recipes/${id}`, {
         title,
         ingredients,
-        videoLink,
+        video_link: videoLink,
         category,
       })
       .then((response) => {
@@ -104,7 +104,7 @@ function EditRecipe() {
             <div className="col-md-7 d-grid">
               <div className="text-center mb-2">
                 <img
-                  src={recipe?.recipepicture}
+                  src={recipe?.recipe_picture}
                   alt="user-icon"
                   width={"80%"}
                 />

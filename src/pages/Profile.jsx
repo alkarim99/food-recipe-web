@@ -45,7 +45,7 @@ function Profile() {
       <div className="container py-5 mb-5">
         <div className="row justify-content-center pb-5 animate__animated animate__zoomIn">
           <div className="col text-center">
-            <img src={profile?.profilepicture} alt="user-icon" width={"15%"} />
+            <img src={profile?.profile_picture} alt="user-icon" width={"15%"} />
             <h3>{profile?.fullname}</h3>
             <Link
               to={`/edit-profile`}
@@ -90,7 +90,7 @@ function Profile() {
               return (
                 <RecipeCardThird
                   title={item?.title}
-                  image={item?.recipepicture}
+                  image={item?.recipe_picture}
                   id={item?.recipes_id}
                   key={index}
                 />
