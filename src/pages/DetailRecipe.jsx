@@ -51,7 +51,7 @@ function DetailRecipe() {
         <div className="row py-3 justify-content-center animate__animated animate__zoomIn">
           <div
             className="recipe-picture"
-            style={{ backgroundImage: `url(${currentRecipe?.recipePicture})` }}
+            style={{ backgroundImage: `url(${currentRecipe?.recipepicture})` }}
           ></div>
         </div>
         <div className="row py-3 justify-content-md-center animate__animated animate__fadeInLeft">
@@ -68,7 +68,7 @@ function DetailRecipe() {
         <div className="row py-3 justify-content-md-center animate__animated animate__fadeInLeft">
           <div className="col-md-7">
             <h3>Video Step</h3>
-            {currentRecipe?.videoLink?.split("/")[2] == "youtu.be" ? (
+            {currentRecipe?.videolink?.split("/")[2] == "youtu.be" ? (
               <>
                 <Link
                   to={`/detail-video-step/${id}`}
@@ -81,7 +81,7 @@ function DetailRecipe() {
             ) : (
               <>
                 <a
-                  href={currentRecipe?.videoLink}
+                  href={currentRecipe?.videolink}
                   target="_blank"
                   className="btn btn-lg"
                   style={{ backgroundColor: "#efc81a", color: "#fff" }}

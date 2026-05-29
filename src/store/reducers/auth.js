@@ -6,7 +6,7 @@ export const counterSlice = createSlice({
     auth: false,
     userData: {},
     token: "",
-    recipes: {},
+    recipes: [],
   },
   reducers: {
     addAuth: (state, action) => {

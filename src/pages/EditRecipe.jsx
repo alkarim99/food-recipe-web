@@ -20,7 +20,7 @@ function EditRecipe() {
   const [category, setCategory] = React.useState(recipe?.category)
   const [title, setTitle] = React.useState(recipe?.title)
   const [ingredients, setIngredients] = React.useState(recipe?.ingredients)
-  const [videoLink, setVideoLink] = React.useState(recipe?.videoLink)
+  const [videoLink, setVideoLink] = React.useState(recipe?.videolink)
   const [isLoading, setIsLoading] = React.useState(false)
 
   React.useEffect(() => {
@@ -104,7 +104,7 @@ function EditRecipe() {
             <div className="col-md-7 d-grid">
               <div className="text-center mb-2">
                 <img
-                  src={recipe?.recipePicture}
+                  src={recipe?.recipepicture}
                   alt="user-icon"
                   width={"80%"}
                 />

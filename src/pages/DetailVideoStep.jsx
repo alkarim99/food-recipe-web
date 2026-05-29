@@ -21,7 +21,7 @@ function DetailVideoStep() {
       })
   }, [])
 
-  const idVideo = currentRecipe?.videoLink?.split("/")[3]
+  const idVideo = currentRecipe?.videolink?.split("/")[3]
 
   return (
     <div>

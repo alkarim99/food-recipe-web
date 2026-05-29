@@ -1,6 +1,7 @@
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
+import axios from "axios"
 
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
@@ -13,15 +14,27 @@ function Profile() {
   const state = useSelector((reducer) => reducer.auth)
   const [profile, setProfile] = React.useState([])
   const [listRecipes, setListRecipes] = React.useState([])
-  const [isLoading, SetIsLoading] = React.useState(true)
+  const [isLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(() => {
     if (!state?.auth) {
       navigate("/login")
     } else {
       setProfile(state?.userData)
-      setListRecipes(state?.recipes)
-      SetIsLoading(false)
+      setIsLoading(true)
+      axios
+        .get(
+          `${process.env.REACT_APP_BASE_URL}/recipes?user_id=${state?.userData?.id}`
+        )
+        .then((response) => {
+          setListRecipes(response?.data?.data || [])
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
     }
   }, [])
 
@@ -32,7 +45,7 @@ function Profile() {
       <div className="container py-5 mb-5">
         <div className="row justify-content-center pb-5 animate__animated animate__zoomIn">
           <div className="col text-center">
-            <img src={profile?.profilePicture} alt="user-icon" width={"15%"} />
+            <img src={profile?.profilepicture} alt="user-icon" width={"15%"} />
             <h3>{profile?.fullname}</h3>
             <Link
               to={`/edit-profile`}
@@ -77,7 +90,7 @@ function Profile() {
               return (
                 <RecipeCardThird
                   title={item?.title}
-                  image={item?.recipePicture}
+                  image={item?.recipepicture}
                   id={item?.recipes_id}
                   key={index}
                 />
