@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        REACT_APP_BASE_URL: ${REACT_APP_BASE_URL}
+    ports:
+      - "3000:80"
+    restart: unless-stopped
