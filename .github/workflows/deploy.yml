@@ -1,0 +1,28 @@
+name: Deploy food-recipe-web
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, Linux, X64]
+
+    steps:
+      - name: Pull latest code
+        working-directory: /home/dul/services/food-recipe-web
+        run: git pull origin main
+
+      - name: Rebuild and restart container
+        working-directory: /home/dul/services/food-recipe-web
+        run: |
+          docker compose down
+          docker compose build --no-cache
+          docker compose up -d
+
+      - name: Verify container is running
+        working-directory: /home/dul/services/food-recipe-web
+        run: |
+          sleep 5
+          docker compose ps
